@@ -1,0 +1,5 @@
+{
+  "name": "GestionPro BC",
+  "description": "Une application professionnelle de gestion de bons de commande (Purchase Orders) avec assistance par IA pour la génération d'articles et l'analyse de données.",
+  "requestFramePermissions": []
+}
