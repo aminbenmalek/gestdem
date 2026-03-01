@@ -6,8 +6,18 @@ require("dotenv").config();
 
 const app = express();
 
-
-app.use(cors( {origin: ["http://localhost:3000","https://www.factpro.benmalekprod.com","https://factpro.benmalekprod.com"],credentials: true}))
+app.use(
+  cors({
+    origin: [
+      "http://localhost:3000",
+      "http://localhost:5173",
+      "http://127.0.0.1:5173",
+      "https://www.factpro.benmalekprod.com",
+      "https://factpro.benmalekprod.com",
+    ],
+    credentials: true,
+  }),
+);
 app.use(express.json());
 app.use(morgan("dev"));
 // Connexion MongoDB
@@ -18,7 +28,11 @@ mongoose
 
 // Routes
 app.use("/api/auth", require("./routes/authRoutes"));
-
+app.use("/api/centres", require("./routes/centresRoutes"));
+app.use("/api/products", require("./routes/productsRoutes"));
+app.use("/api/orders", require("./routes/ordersRoutes"));
+app.use("/api/suppliers", require("./routes/suppliersRoutes"));
+app.use("/api/stock", require("./routes/stockRoutes"));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, "0.0.0.0", () =>
