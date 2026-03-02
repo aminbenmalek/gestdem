@@ -198,9 +198,7 @@ const OrderForm: React.FC<OrderFormProps> = ({
           <div className="bg-white w-full max-w-2xl rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[80vh] animate-in zoom-in-95 duration-200">
             <div className="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50">
               <div>
-                <h3 className="text-xl font-bold text-slate-900">
-                  Catalogue Articles
-                </h3>
+                <h3 className="text-xl font-bold text-slate-900">Articles</h3>
               </div>
               <button
                 onClick={() => {
@@ -377,7 +375,7 @@ const OrderForm: React.FC<OrderFormProps> = ({
                     onClick={() => setIsModalOpen(true)}
                     className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-xl text-sm font-black uppercase tracking-widest hover:bg-blue-700 transition-all shadow-md"
                   >
-                    <Search size={16} /> Catalogue
+                    <Search size={16} /> ARTICLES
                   </button>
                   {/* <button 
                     type="button"
