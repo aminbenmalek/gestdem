@@ -17,6 +17,7 @@ import StockManagement from "./components/StockManagement";
 import { syncInitialData, storageService } from "./services/storageService";
 import { setProducts } from "./src/store/catalogSlice";
 import { setOrders } from "./src/store/ordersSlice";
+import FleetManagement from "./components/FleetManagement";
 
 const App: React.FC = () => {
   const [activeView, setActiveView] = useState<ViewType>("dashboard");
@@ -103,6 +104,8 @@ const App: React.FC = () => {
         return <SupplierManagement />;
       case "stock":
         return <StockManagement />;
+      case "fleet":
+        return <FleetManagement />;
       default:
         return <Dashboard orders={orders} />;
     }

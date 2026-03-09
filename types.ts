@@ -1,9 +1,8 @@
-
 export enum OrderStatus {
-  EN_COURS = 'En cours',
-  EN_ATTENTE = 'En attente',
-  VALIDE = 'Validé',
-  ANNULE = 'Annulé'
+  EN_COURS = "En cours",
+  EN_ATTENTE = "En attente",
+  VALIDE = "Validé",
+  ANNULE = "Annulé",
 }
 
 export interface Centre {
@@ -85,5 +84,61 @@ export interface StockMovement {
   items: StockMovementItem[];
   notes?: string;
 }
+export interface Vehicle {
+  id: string;
+  registration: string;
+  brand: string;
+  model: string;
+  year: number;
+  fuelType: "Essence" | "Diesel" | "Hybride" | "Electrique";
+  currentMileage: number;
+  status: "Disponible" | "En service" | "En maintenance" | "Hors service";
+  assignment?: string;
+  driverId?: string;
+  insuranceExpiry: string;
+  lastMaintenanceDate: string;
+  nextMaintenanceMileage: number;
+  history?: HistoryEntry[];
+}
 
-export type ViewType = 'dashboard' | 'orders' | 'create' | 'suppliers' | 'catalog' | 'centres' | 'stock';
+export interface MaintenanceRecord {
+  id: string;
+  vehicleId: string;
+  date: string;
+  type: "Vidange" | "Réparation" | "Révision" | "Pneumatiques" | "Autre";
+  description: string;
+  cost: number;
+  mileageAtMaintenance: number;
+}
+
+export interface FuelRecord {
+  id: string;
+  vehicleId: string;
+  date: string;
+  quantity: number;
+  cost: number;
+  mileageAtFueling: number;
+  driver?: string;
+  destination?: string;
+  reason?: string;
+  referenceNumber?: string;
+}
+
+export interface Driver {
+  id: string;
+  name: string;
+  licenseNumber: string;
+  phone: string;
+  status: "Actif" | "Inactif";
+  history?: HistoryEntry[];
+}
+
+export type ViewType =
+  | "dashboard"
+  | "orders"
+  | "create"
+  | "suppliers"
+  | "catalog"
+  | "centres"
+  | "stock"
+  | "fleet";

@@ -6,6 +6,10 @@ import {
   OrderStatus,
   StockMovement,
   StockMovementItem,
+  Driver,
+  FuelRecord,
+  MaintenanceRecord,
+  Vehicle,
 } from "../types";
 import { apiService } from "./apiService";
 
@@ -14,6 +18,10 @@ const SUPPLIERS_KEY = "gestionpro_suppliers";
 const PRODUCTS_KEY = "gestionpro_products";
 const CENTRES_KEY = "gestionpro_centres";
 const STOCK_MOVEMENTS_KEY = "gestionpro_stock_movements";
+const VEHICLES_KEY = "gestionpro_vehicles";
+const MAINTENANCE_KEY = "gestionpro_maintenance";
+const FUEL_KEY = "gestionpro_fuel";
+const DRIVERS_KEY = "gestionpro_drivers";
 
 const defaultSuppliers: Supplier[] = [
   {
@@ -395,6 +403,62 @@ export const storageService = {
     const nextNumber = Math.max(...numbers, 0) + 1;
 
     return `${nextNumber}/${currentYear}`;
+  },
+  getVehicles: (): Vehicle[] => {
+    const data = localStorage.getItem(VEHICLES_KEY);
+    return data ? JSON.parse(data) : [];
+  },
+  saveVehicle: (vehicle: Vehicle) => {
+    const vehicles = storageService.getVehicles();
+    const index = vehicles.findIndex((v) => v.id === vehicle.id);
+    const updatedVehicles = [...vehicles];
+    if (index >= 0) updatedVehicles[index] = vehicle;
+    else updatedVehicles.push(vehicle);
+    localStorage.setItem(VEHICLES_KEY, JSON.stringify(updatedVehicles));
+  },
+  deleteVehicle: (id: string) => {
+    const vehicles = storageService.getVehicles();
+    localStorage.setItem(
+      VEHICLES_KEY,
+      JSON.stringify(vehicles.filter((v) => v.id !== id)),
+    );
+  },
+  getMaintenanceRecords: (): MaintenanceRecord[] => {
+    const data = localStorage.getItem(MAINTENANCE_KEY);
+    return data ? JSON.parse(data) : [];
+  },
+  saveMaintenanceRecord: (record: MaintenanceRecord) => {
+    const records = storageService.getMaintenanceRecords();
+    records.push(record);
+    localStorage.setItem(MAINTENANCE_KEY, JSON.stringify(records));
+  },
+  getFuelRecords: (): FuelRecord[] => {
+    const data = localStorage.getItem(FUEL_KEY);
+    return data ? JSON.parse(data) : [];
+  },
+  saveFuelRecord: (record: FuelRecord) => {
+    const records = storageService.getFuelRecords();
+    records.push(record);
+    localStorage.setItem(FUEL_KEY, JSON.stringify(records));
+  },
+  getDrivers: (): Driver[] => {
+    const data = localStorage.getItem(DRIVERS_KEY);
+    return data ? JSON.parse(data) : [];
+  },
+  saveDriver: (driver: Driver) => {
+    const drivers = storageService.getDrivers();
+    const index = drivers.findIndex((d) => d.id === driver.id);
+    const updatedDrivers = [...drivers];
+    if (index >= 0) updatedDrivers[index] = driver;
+    else updatedDrivers.push(driver);
+    localStorage.setItem(DRIVERS_KEY, JSON.stringify(updatedDrivers));
+  },
+  deleteDriver: (id: string) => {
+    const drivers = storageService.getDrivers();
+    localStorage.setItem(
+      DRIVERS_KEY,
+      JSON.stringify(drivers.filter((d) => d.id !== id)),
+    );
   },
 };
 

@@ -11,6 +11,7 @@ import {
   ArrowLeftRight,
   Menu,
   X,
+  Car,
 } from "lucide-react";
 
 interface LayoutProps {
@@ -29,6 +30,7 @@ const Layout: React.FC<LayoutProps> = ({ children, activeView, setView }) => {
     { id: "stock", label: "Mouvements Stock", icon: ArrowLeftRight },
     { id: "centres", label: "Centres", icon: MapPin },
     { id: "suppliers", label: "Fournisseurs", icon: Users },
+    { id: "fleet", label: "Parc Automobile", icon: Car },
   ];
 
   return (
