@@ -470,6 +470,15 @@ const FleetManagement: React.FC = () => {
           )}
         </button>
         <button
+          onClick={() => setActiveTab("assignments")}
+          className={`pb-4 text-sm font-black uppercase tracking-widest transition-all relative ${activeTab === "assignments" ? "text-blue-600" : "text-slate-400 hover:text-slate-600"}`}
+        >
+          Affectations
+          {activeTab === "assignments" && (
+            <div className="absolute bottom-0 left-0 w-full h-1 bg-blue-600 rounded-full"></div>
+          )}
+        </button>
+        <button
           onClick={() => setActiveTab("maintenance")}
           className={`pb-4 text-sm font-black uppercase tracking-widest transition-all relative ${activeTab === "maintenance" ? "text-blue-600" : "text-slate-400 hover:text-slate-600"}`}
         >
@@ -482,17 +491,8 @@ const FleetManagement: React.FC = () => {
           onClick={() => setActiveTab("fuel")}
           className={`pb-4 text-sm font-black uppercase tracking-widest transition-all relative ${activeTab === "fuel" ? "text-blue-600" : "text-slate-400 hover:text-slate-600"}`}
         >
-          Consommation
+          Missions
           {activeTab === "fuel" && (
-            <div className="absolute bottom-0 left-0 w-full h-1 bg-blue-600 rounded-full"></div>
-          )}
-        </button>
-        <button
-          onClick={() => setActiveTab("assignments")}
-          className={`pb-4 text-sm font-black uppercase tracking-widest transition-all relative ${activeTab === "assignments" ? "text-blue-600" : "text-slate-400 hover:text-slate-600"}`}
-        >
-          Affectations
-          {activeTab === "assignments" && (
             <div className="absolute bottom-0 left-0 w-full h-1 bg-blue-600 rounded-full"></div>
           )}
         </button>

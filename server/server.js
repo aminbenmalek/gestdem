@@ -22,6 +22,10 @@ app.use("/api/products", require("./routes/productsRoutes"));
 app.use("/api/orders", require("./routes/ordersRoutes"));
 app.use("/api/suppliers", require("./routes/suppliersRoutes"));
 app.use("/api/stock", require("./routes/stockRoutes"));
+app.use("/api/vehicule", require("./routes/vehiculeRoutes"));
+app.use("/api/chauffeur", require("./routes/chauffeurRoutes"));
+app.use("/api/maintenance", require("./routes/maintenanceRoutes"));
+app.use("/api/carburant", require("./routes/carburantRoutes"));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, "0.0.0.0", () =>

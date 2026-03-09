@@ -415,6 +415,14 @@ export const storageService = {
     if (index >= 0) updatedVehicles[index] = vehicle;
     else updatedVehicles.push(vehicle);
     localStorage.setItem(VEHICLES_KEY, JSON.stringify(updatedVehicles));
+    (async () => {
+      try {
+        if (index >= 0) await apiService.put(`/vehicule`, vehicle);
+        else await apiService.post("/vehicule", vehicle);
+      } catch (err) {
+        console.error(err);
+      }
+    })();
   },
   deleteVehicle: (id: string) => {
     const vehicles = storageService.getVehicles();
@@ -452,6 +460,14 @@ export const storageService = {
     if (index >= 0) updatedDrivers[index] = driver;
     else updatedDrivers.push(driver);
     localStorage.setItem(DRIVERS_KEY, JSON.stringify(updatedDrivers));
+    (async () => {
+      try {
+        if (index >= 0) await apiService.put(`/chauffeur/${driver.id}`, driver);
+        else await apiService.post("/chauffeur", driver);
+      } catch (err) {
+        console.error(err);
+      }
+    })();
   },
   deleteDriver: (id: string) => {
     const drivers = storageService.getDrivers();
