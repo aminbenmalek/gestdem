@@ -411,7 +411,6 @@ export const storageService = {
   saveVehicle: (vehicle: Vehicle) => {
     const vehicles = storageService.getVehicles();
     const index = vehicles.findIndex((v) => v.id === vehicle.id);
-    alert(index);
     const updatedVehicles = [...vehicles];
     if (index >= 0) updatedVehicles[index] = vehicle;
     else updatedVehicles.push(vehicle);
