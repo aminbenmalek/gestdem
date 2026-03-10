@@ -411,13 +411,15 @@ export const storageService = {
   saveVehicle: (vehicle: Vehicle) => {
     const vehicles = storageService.getVehicles();
     const index = vehicles.findIndex((v) => v.id === vehicle.id);
+    alert(index);
     const updatedVehicles = [...vehicles];
     if (index >= 0) updatedVehicles[index] = vehicle;
     else updatedVehicles.push(vehicle);
     localStorage.setItem(VEHICLES_KEY, JSON.stringify(updatedVehicles));
     (async () => {
       try {
-        if (index >= 0) await apiService.put(`/vehicule`, vehicle);
+        if (index >= 0)
+          await apiService.put(`/vehicule/${vehicle.id}`, vehicle);
         else await apiService.post("/vehicule", vehicle);
       } catch (err) {
         console.error(err);
@@ -426,10 +428,19 @@ export const storageService = {
   },
   deleteVehicle: (id: string) => {
     const vehicles = storageService.getVehicles();
+    const index = vehicles.findIndex((v) => v.id === id);
     localStorage.setItem(
       VEHICLES_KEY,
       JSON.stringify(vehicles.filter((v) => v.id !== id)),
     );
+    (async () => {
+      try {
+        if (index >= 0) await apiService.delete(`/vehicule/${id}`);
+        else alert("Véhicule non trouvée!");
+      } catch (err) {
+        console.error(err);
+      }
+    })();
   },
   getMaintenanceRecords: (): MaintenanceRecord[] => {
     const data = localStorage.getItem(MAINTENANCE_KEY);
@@ -437,8 +448,19 @@ export const storageService = {
   },
   saveMaintenanceRecord: (record: MaintenanceRecord) => {
     const records = storageService.getMaintenanceRecords();
-    records.push(record);
-    localStorage.setItem(MAINTENANCE_KEY, JSON.stringify(records));
+    const index = records.findIndex((v) => v.id === record.id);
+    const updatedRecords = [...records];
+    if (index >= 0) updatedRecords[index] = record;
+    else updatedRecords.push(record);
+    localStorage.setItem(MAINTENANCE_KEY, JSON.stringify(updatedRecords));
+    (async () => {
+      try {
+        if (index >= 0) await apiService.put(`/maintenance`, record);
+        else await apiService.post("/maintenance", record);
+      } catch (err) {
+        console.error(err);
+      }
+    })();
   },
   getFuelRecords: (): FuelRecord[] => {
     const data = localStorage.getItem(FUEL_KEY);
@@ -446,8 +468,19 @@ export const storageService = {
   },
   saveFuelRecord: (record: FuelRecord) => {
     const records = storageService.getFuelRecords();
-    records.push(record);
-    localStorage.setItem(FUEL_KEY, JSON.stringify(records));
+    const index = records.findIndex((v) => v.id === record.id);
+    const updatedRecords = [...records];
+    if (index >= 0) updatedRecords[index] = record;
+    else updatedRecords.push(record);
+    localStorage.setItem(FUEL_KEY, JSON.stringify(updatedRecords));
+    (async () => {
+      try {
+        if (index >= 0) await apiService.put(`/carburant`, record);
+        else await apiService.post("/carburant", record);
+      } catch (err) {
+        console.error(err);
+      }
+    })();
   },
   getDrivers: (): Driver[] => {
     const data = localStorage.getItem(DRIVERS_KEY);
@@ -481,12 +514,26 @@ export const storageService = {
 // Optional helper: fetch initial data from backend and populate local cache.
 export async function syncInitialData() {
   try {
-    const [orders, suppliers, products, centres, stock] = await Promise.all([
+    const [
+      orders,
+      suppliers,
+      products,
+      centres,
+      stock,
+      vehicles,
+      drivers,
+      fuelRecords,
+      maintenanceRecords,
+    ] = await Promise.all([
       apiService.get("/orders").catch(() => []),
       apiService.get("/suppliers").catch(() => []),
       apiService.get("/products").catch(() => []),
       apiService.get("/centres").catch(() => []),
       apiService.get("/stock").catch(() => []),
+      apiService.get("/vehicule").catch(() => []),
+      apiService.get("/chauffeur").catch(() => []),
+      apiService.get("/carburant").catch(() => []),
+      apiService.get("/maintenance").catch(() => []),
     ]);
 
     if (orders && orders.length >= 0)
@@ -499,6 +546,14 @@ export async function syncInitialData() {
       localStorage.setItem(CENTRES_KEY, JSON.stringify(centres));
     if (stock && stock.length >= 0)
       localStorage.setItem(STOCK_MOVEMENTS_KEY, JSON.stringify(stock));
+    if (vehicles && vehicles.length >= 0)
+      localStorage.setItem(VEHICLES_KEY, JSON.stringify(vehicles));
+    if (drivers && drivers.length >= 0)
+      localStorage.setItem(DRIVERS_KEY, JSON.stringify(drivers));
+    if (fuelRecords && fuelRecords.length >= 0)
+      localStorage.setItem(FUEL_KEY, JSON.stringify(fuelRecords));
+    if (maintenanceRecords && maintenanceRecords.length >= 0)
+      localStorage.setItem(MAINTENANCE_KEY, JSON.stringify(maintenanceRecords));
 
     return true;
   } catch (err) {
